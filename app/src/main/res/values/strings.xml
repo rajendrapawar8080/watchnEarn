@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">abc</string>
+    <string name="action_settings">Settings</string>
+    <string name="payment_converion">Convert Coins to Dollar</string>
+    <string name="payment_request">Requet payment </string>
+    <string name="payment_status">Payment Status</string>
+
+</resources>
