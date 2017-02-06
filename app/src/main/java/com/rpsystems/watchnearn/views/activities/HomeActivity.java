@@ -15,7 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.rpsystems.watchnearn.R;
-import com.rpsystems.watchnearn.adapters.Pager;
+import com.rpsystems.watchnearn.controllers.adapters.Pager;
 import com.rpsystems.watchnearn.views.fragments.OffersWallFragment;
 import com.rpsystems.watchnearn.views.fragments.PaymentFragment;
 import com.rpsystems.watchnearn.views.fragments.Tab3;
