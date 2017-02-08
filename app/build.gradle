@@ -42,7 +42,8 @@ dependencies {
     //butterknife library
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
-
+    //paypal sdk
+    compile 'com.paypal.sdk:paypal-android-sdk:2.14.2'
 
 
 }

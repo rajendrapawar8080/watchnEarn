@@ -1,5 +1,6 @@
 package com.rpsystems.watchnearn.views.activities;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,9 +14,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.rpsystems.watchnearn.R;
+import com.rpsystems.watchnearn.constants.CommonConstant;
 import com.rpsystems.watchnearn.controllers.adapters.Pager;
+import com.rpsystems.watchnearn.controllers.interfaces.NetworkReceiver;
+import com.rpsystems.watchnearn.rest.NetworkCall;
+import com.rpsystems.watchnearn.rest.model.requestpojos.PaymentRequest;
 import com.rpsystems.watchnearn.views.fragments.OffersWallFragment;
 import com.rpsystems.watchnearn.views.fragments.PaymentFragment;
 import com.rpsystems.watchnearn.views.fragments.Tab3;
@@ -24,7 +30,7 @@ import com.rpsystems.watchnearn.views.fragments.Tab5;
 import com.rpsystems.watchnearn.views.fragments.Tab6;
 import com.rpsystems.watchnearn.views.fragments.Tab7;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements NetworkReceiver{
 
     //This is our tablayout
     private TabLayout tabLayout;
@@ -46,29 +52,9 @@ public class HomeActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-
-        //Adding the tabs using addTab() method
-        tabLayout.addTab(tabLayout.newTab().setText("OffersWallFragment"));
-        tabLayout.addTab(tabLayout.newTab().setText("PaymentFragment"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab3"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab4"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab5"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab6"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab7"));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-        //Initializing viewPager
-        viewPager = (ViewPager) findViewById(R.id.pager);
-
-        //Creating our pager adapter
-        Pager adapter = new Pager(getSupportFragmentManager(), tabLayout.getTabCount());
-
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
-        //Adding adapter to pager
-        viewPager.setAdapter(adapter);
-
+        initTabValues();
+        NetworkCall networkCall=new NetworkCall(this,this);
+        networkCall.fetchWSCall();
         //Adding onTabSelectedListener to swipe views
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -120,6 +106,30 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+    private void initTabValues(){
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+
+        //Adding the tabs using addTab() method
+        tabLayout.addTab(tabLayout.newTab().setText("OffersWallFragment"));
+        tabLayout.addTab(tabLayout.newTab().setText("PaymentFragment"));
+        tabLayout.addTab(tabLayout.newTab().setText("Tab3"));
+        tabLayout.addTab(tabLayout.newTab().setText("Tab4"));
+        tabLayout.addTab(tabLayout.newTab().setText("Tab5"));
+        tabLayout.addTab(tabLayout.newTab().setText("Tab6"));
+        tabLayout.addTab(tabLayout.newTab().setText("Tab7"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        //Initializing viewPager
+        viewPager = (ViewPager) findViewById(R.id.pager);
+
+        //Creating our pager adapter
+        Pager adapter = new Pager(getSupportFragmentManager(), tabLayout.getTabCount());
+
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+        //Adding adapter to pager
+        viewPager.setAdapter(adapter);
+    }
     private void chageFragment(Fragment fragment, String tag) {
         FragmentManager fragmentManager=getSupportFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
@@ -147,4 +157,28 @@ public class HomeActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+    @Override
+    public <T> void onResponse(T obj, int tag) {
+        PaymentRequest paymentRequest;
+        paymentRequest= (PaymentRequest) obj;
+        switch (tag){
+            case CommonConstant.TAG_COUNTRY:
+
+              /*  for(final Result resultObj : paymentRequest.getRestResponse().getResult()) {
+                    mCardAdapter.addData(resultObj);
+                    mProgressBar.setVisibility(View.GONE);
+                }*/
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onError( String msg) {
+
+        Toast.makeText(this, "Exception"+msg, Toast.LENGTH_SHORT).show();
+
+    }
+
 }
