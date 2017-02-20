@@ -41,8 +41,8 @@ public class HomeActivity extends AppCompatActivity implements NetworkReceiver{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+       // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+      //  setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -110,7 +110,7 @@ public class HomeActivity extends AppCompatActivity implements NetworkReceiver{
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 
         //Adding the tabs using addTab() method
-        tabLayout.addTab(tabLayout.newTab().setText("OffersWallFragment"));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.facbook));
         tabLayout.addTab(tabLayout.newTab().setText("PaymentFragment"));
         tabLayout.addTab(tabLayout.newTab().setText("Tab3"));
         tabLayout.addTab(tabLayout.newTab().setText("Tab4"));
