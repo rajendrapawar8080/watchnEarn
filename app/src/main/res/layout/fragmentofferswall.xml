@@ -6,7 +6,6 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
    >
-
     <LinearLayout
         android:id="@+id/videoContainer_id"
         android:layout_above="@+id/bottomView_Id"
@@ -29,6 +28,7 @@
         android:layout_weight="1"
         android:weightSum="2">
         <VideoView
+            android:id="@+id/videoViewOne_Id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>

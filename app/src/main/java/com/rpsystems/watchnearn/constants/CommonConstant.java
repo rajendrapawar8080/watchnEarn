@@ -1,6 +1,5 @@
 package com.rpsystems.watchnearn.constants;
 
-import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.rpsystems.watchnearn.utilities.PayPalConfig;
 
 /**
@@ -15,11 +14,5 @@ public class CommonConstant {
     //Paypal intent request code to track onActivityResult method
     public static final int PAYPAL_REQUEST_CODE = 123;
     //Paypal Configuration Object
-    private static PayPalConfiguration config = new PayPalConfiguration()
-            // Start with mock environment.  When ready, switch to sandbox (ENVIRONMENT_SANDBOX)
-            // or live (ENVIRONMENT_PRODUCTION)
-            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
-            .clientId(PayPalConfig.PAYPAL_CLIENT_ID);
-  //  sdjj;
 
 }

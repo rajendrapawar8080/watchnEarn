@@ -16,6 +16,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.rpsystems.watchnearn.R;
 import com.rpsystems.watchnearn.constants.CommonConstant;
 import com.rpsystems.watchnearn.controllers.adapters.Pager;
@@ -34,9 +37,10 @@ public class HomeActivity extends AppCompatActivity implements NetworkReceiver{
 
     //This is our tablayout
     private TabLayout tabLayout;
-
+ //   private InterstitialAd mInterstitialAd;
     //This is our viewPager
     private ViewPager viewPager;
+    FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,18 +48,29 @@ public class HomeActivity extends AppCompatActivity implements NetworkReceiver{
        // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
       //  setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+         fab = (FloatingActionButton) findViewById(R.id.fab);
+
+
+      /*  mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-4371432322602969/3249622334");
+
+        mInterstitialAd.setAdListener(new AdListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onAdClosed() {
+                requestNewInterstitial();
+                // beginPlayingGame();
             }
         });
+        requestNewInterstitial();*/
+
+
+      //  initListener();
+
         initTabValues();
         NetworkCall networkCall=new NetworkCall(this,this);
-        networkCall.fetchWSCall();
+    //    networkCall.fetchWSCall();
         //Adding onTabSelectedListener to swipe views
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -106,6 +121,25 @@ public class HomeActivity extends AppCompatActivity implements NetworkReceiver{
             }
         });
     }
+   /* private void initListener(){
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                }else {
+                    Toast.makeText(HomeActivity.this, "Ad did not load", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+    private void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+
+        mInterstitialAd.loadAd(adRequest);
+    }*/
     private void initTabValues(){
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 
@@ -177,7 +211,7 @@ public class HomeActivity extends AppCompatActivity implements NetworkReceiver{
     @Override
     public void onError( String msg) {
 
-        Toast.makeText(this, "Exception"+msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Exception=>"+msg, Toast.LENGTH_SHORT).show();
 
     }
 

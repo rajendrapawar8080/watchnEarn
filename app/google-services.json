@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "496838794462",
+    "firebase_url": "https://watch-and-earn-b2060.firebaseio.com",
+    "project_id": "watch-and-earn-b2060",
+    "storage_bucket": "watch-and-earn-b2060.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:496838794462:android:baf322ea85ac43a4",
+        "android_client_info": {
+          "package_name": "com.rpsystems.watchnearn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "496838794462-k1couq8a9078p3vr5mapucci6u8m5urg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2bkmquE7z_p_YzJ26hUq8bqggAvW3K_o"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
