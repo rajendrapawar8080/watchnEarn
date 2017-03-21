@@ -2,6 +2,7 @@ package com.rpsystems.watchnearn.views.activities;
 
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,8 +22,10 @@ import android.widget.VideoView;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.common.api.CommonStatusCodes;
 import com.rpsystems.watchnearn.Manifest;
 import com.rpsystems.watchnearn.R;
+import com.rpsystems.watchnearn.constants.CommonConstant;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,20 +35,19 @@ import butterknife.ButterKnife;
  */
 
 public class VideoActivity extends AppCompatActivity {
-    public static String TAG = "VideoViewActivity";
-    private static final int REQUEST_WRITE_STORAGE = 112;
+    public static String TAG = CommonConstant.VideoActivity;
     @BindView(R.id.videoView_ID) VideoView mVideoView;
     private InterstitialAd mInterstetialAdds;
+    private boolean isAddLoaded=false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_videoview);
         ButterKnife.bind(this);
-
+        isAddLoaded=true;
         checkDevice();
         Log.d(TAG, "external storage path=" + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath()+"/Sample Videos.mp4");
-
     }
     private void initMediaController() {
         MediaController mediaController = new MediaController(VideoActivity.this);
@@ -56,12 +58,19 @@ public class VideoActivity extends AppCompatActivity {
         mVideoView.requestFocus();
         mVideoView.start();
         Log.d(TAG, "external storage path=" + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath()+"/Sample Videos.mp4");
-        initAdds();
-        /*if (mInterstetialAdds.isLoaded()){
-            mInterstetialAdds.show();
-        }*/
-
-
+       mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+           @Override
+           public void onCompletion(MediaPlayer mp) {
+               mVideoView.stopPlayback();
+               finish();
+           }
+       });
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                initAdds();
+            }
+        },500);
     }
     private void checkDevice(){
         if (Build.VERSION.SDK_INT>=android.os.Build.VERSION_CODES.M){
@@ -79,13 +88,18 @@ public class VideoActivity extends AppCompatActivity {
             @Override
             public void onAdClosed() {
                 requestNewInterstitial();
+
                 // beginPlayingGame();
             }
 
             @Override
             public void onAdLoaded() {
                 super.onAdLoaded();
-                mInterstetialAdds.show();
+                if (isAddLoaded){
+                    mInterstetialAdds.show();
+                }
+
+                isAddLoaded=false;
             }
         });
         requestNewInterstitial();
@@ -125,7 +139,7 @@ public class VideoActivity extends AppCompatActivity {
     protected void makeRequest() {
         ActivityCompat.requestPermissions(this,
                 new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE},
-                REQUEST_WRITE_STORAGE);
+                CommonConstant.REQUEST_WRITE_STORAGE);
     }
     private void requestNewInterstitial() {
         AdRequest adRequest = new AdRequest.Builder()
@@ -138,7 +152,7 @@ public class VideoActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
-            case REQUEST_WRITE_STORAGE: {
+            case CommonConstant.REQUEST_WRITE_STORAGE: {
 
                 if (grantResults.length == 0
                         || grantResults[0] !=

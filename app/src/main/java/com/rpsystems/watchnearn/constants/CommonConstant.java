@@ -13,6 +13,8 @@ public class CommonConstant {
     public static final int TAG_COUNTRY = 1;
     //Paypal intent request code to track onActivityResult method
     public static final int PAYPAL_REQUEST_CODE = 123;
+    public static String VideoActivity="VideoViewActivity";
+    public static final int REQUEST_WRITE_STORAGE = 112;
     //Paypal Configuration Object
 
 }

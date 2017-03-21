@@ -47,12 +47,10 @@ public class OffersWallFragment extends Fragment {
         mView=inflater.inflate(R.layout.fragment_offers,container,false);
         ButterKnife.bind(this,mView);
         initViews(mView);
-
         return mView;
     }
    private void initViews(View view){
        mVideoFirst= (ImageView)view.findViewById(R.id.videoOne_ID);
-
        mInterstitialAd = new InterstitialAd(getActivity());
        mInterstitialAd.setAdUnitId("ca-app-pub-4371432322602969/3249622334");
        mInterstitialAd.setAdListener(new AdListener() {
@@ -74,39 +72,19 @@ public class OffersWallFragment extends Fragment {
        }*/
    }
     @OnClick(R.id.videoTwo_ID) public void displayAddTwo(){
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        }else {
-            Toast.makeText(getActivity(), "Ad did not load", Toast.LENGTH_SHORT).show();
-        }
+        newActivity();
     }
     @OnClick(R.id.videoThree_ID) public void displayAddThree(){
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        }else {
-            Toast.makeText(getActivity(), "Ad did not load", Toast.LENGTH_SHORT).show();
-        }
+        newActivity();
     }
     @OnClick(R.id.videoFour_ID) public void displayAddFour(){
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        }else {
-            Toast.makeText(getActivity(), "Ad did not load", Toast.LENGTH_SHORT).show();
-        }
+        newActivity();
     }
     @OnClick(R.id.videoFive_ID) public void displayAddFive(){
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        }else {
-            Toast.makeText(getActivity(), "Ad did not load", Toast.LENGTH_SHORT).show();
-        }
+        newActivity();
     }
     @OnClick(R.id.videoSix_ID) public void displayAddSix(){
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        }else {
-            Toast.makeText(getActivity(), "Ad did not load", Toast.LENGTH_SHORT).show();
-        }
+        newActivity();
     }
     private void requestNewInterstitial() {
         AdRequest adRequest = new AdRequest.Builder()
