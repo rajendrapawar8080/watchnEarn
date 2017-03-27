@@ -3,4 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="login_button_color">#00B6AE</color>
+    <color name="forgot_color">#D8E384</color>
+    <color name="login_backgroud">#262624</color>
+    <color name="white_color">#ffffff</color>
+    <color name="login_bottom_color">#363636</color>
+    <color name="my_statusbar_color">#000000</color>
+    <color name="darGrey">#A9A9A9</color>
 </resources>

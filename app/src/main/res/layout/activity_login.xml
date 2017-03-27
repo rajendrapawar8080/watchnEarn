@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/login_backgroud"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="@dimen/login_screen_width"
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/login_screen_margin"
+        android:layout_height="wrap_content">
+     <EditText
+         android:id="@+id/edt_email_id"
+         style="@style/CustomLoginEdittext"
+         android:textColorHint="@color/darGrey"
+         android:textColor="@color/white_color"
+         android:inputType="textEmailAddress"
+         android:hint="@string/edit_email"/>
+        <EditText
+            android:id="@+id/edt_password_id"
+            android:layout_marginTop="@dimen/login_screen_topMargin"
+            style="@style/CustomLoginEdittext"
+            android:textColor="@color/white_color"
+            android:textColorHint="@color/darGrey"
+            android:inputType="textPassword"
+            android:hint="@string/edit_password"/>
+        <TextView
+            android:id="@+id/txt_forgotpass_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_forgotpass"
+            android:textColor="@color/forgot_color"
+            android:layout_gravity="end"/>
+
+        <Button
+            android:id="@+id/btn_login_id"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/login_screen_topMargin"
+            android:layout_height="@dimen/login_screen_height"
+            android:text="@string/btn_loginttxt"
+            android:textColor="@android:color/white"
+            android:background="@drawable/rectangle_filled_shape"
+            android:textAllCaps="false"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/login_bottom_color"
+        android:layout_alignParentBottom="true">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/login_screen_loginTopmargin"
+           android:layout_centerInParent="true"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/white_color"
+                android:text="@string/txt_donthaveacount"
+                />
+            <TextView
+                android:id="@+id/txt_switch_signup_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textSize="@dimen/size_sigUp"
+                android:textColor="@color/forgot_color"
+                android:text="@string/txt_signup"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

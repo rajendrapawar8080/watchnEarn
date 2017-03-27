@@ -4,4 +4,13 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="viewWidth">10dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="login_screen_margin">250dp</dimen>
+    <dimen name="login_screen_width">250dp</dimen>
+    <dimen name="login_screen_height">35dp</dimen>
+    <dimen name="login_screen_topMargin">20dp</dimen>
+    <dimen name="login_screen_loginTopmargin">40dp</dimen>
+    <dimen name="size_sigUp">16sp</dimen>
+    <dimen name="heading_size">22sp</dimen>
+    <dimen name="thirty_margin">30dp</dimen>
+    <dimen name="ten_margin">10dp</dimen>
 </resources>
