@@ -32,6 +32,7 @@ import com.rpsystems.watchnearn.views.fragments.Tab4;
 import com.rpsystems.watchnearn.views.fragments.Tab5;
 import com.rpsystems.watchnearn.views.fragments.Tab6;
 import com.rpsystems.watchnearn.views.fragments.Tab7;
+import com.vungle.publisher.VunglePub;
 
 public class HomeActivity extends AppCompatActivity implements NetworkReceiver{
 
@@ -41,13 +42,17 @@ public class HomeActivity extends AppCompatActivity implements NetworkReceiver{
     //This is our viewPager
     private ViewPager viewPager;
     FloatingActionButton fab;
+    final VunglePub vunglePub = VunglePub.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
        // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
       //  setSupportActionBar(toolbar);
+        final String app_id = getString(R.string.vungle_app_id);
 
+        // initialize the Publisher SDK
+        vunglePub.init(this, app_id);
          fab = (FloatingActionButton) findViewById(R.id.fab);
 
 
@@ -214,5 +219,15 @@ public class HomeActivity extends AppCompatActivity implements NetworkReceiver{
         Toast.makeText(this, "Exception=>"+msg, Toast.LENGTH_SHORT).show();
 
     }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        vunglePub.onPause();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        vunglePub.onResume();
+    }
 }

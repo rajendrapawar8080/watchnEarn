@@ -79,7 +79,6 @@ public class VideoActivity extends AppCompatActivity {
             initMediaController();
 
         }
-
     }
     private void initAdds(){
         mInterstetialAdds=new InterstitialAd(VideoActivity.this);

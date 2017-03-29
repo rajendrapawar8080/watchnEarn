@@ -17,9 +17,9 @@
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
 
         <activity
-            android:name="com.rpsystems.watchnearn.views.activities.SignUpActivity"
+            android:name="com.rpsystems.watchnearn.views.activities.HomeActivity"
             android:label="@string/app_name"
-            android:theme="@style/NoactionBarTheme">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -32,6 +32,18 @@
         <activity android:name=".views.activities.VideoActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar"/>
+
+        <!-- Required activities for playback of Vungle video Ads -->
+
+        <activity android:name="com.vungle.publisher.VideoFullScreenAdActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
+
+        <activity android:name="com.vungle.publisher.MraidFullScreenAdActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"/>
+        <activity android:name=".views.activities.VungleAdds"/>
+
     </application>
 
 

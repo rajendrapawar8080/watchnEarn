@@ -19,4 +19,6 @@
     <string name="edit_coutry">Country</string>
     <string name="edit_referal">Reference Code</string>
     <string name="create_account">Create one for me</string>
+
+    <string name="vungle_app_id">58db7386eba9a90a1a000dea</string>
 </resources>

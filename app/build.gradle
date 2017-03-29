@@ -11,6 +11,9 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -19,7 +22,6 @@ android {
     }
 
 }
-
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -30,6 +32,7 @@ dependencies {
         // exclude Retrofit’s OkHttp peer-dependency module and define your own module import
         exclude module: 'okhttp'
     }
+
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.android.support:design:25.1.0'
     compile 'com.squareup.okhttp3:okhttp:3.3.1'
