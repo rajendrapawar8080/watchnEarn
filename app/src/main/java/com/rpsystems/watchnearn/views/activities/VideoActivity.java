@@ -16,17 +16,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.MediaController;
-import android.widget.Toast;
 import android.widget.VideoView;
-
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.common.api.CommonStatusCodes;
-import com.rpsystems.watchnearn.Manifest;
 import com.rpsystems.watchnearn.R;
 import com.rpsystems.watchnearn.constants.CommonConstant;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -87,17 +82,14 @@ public class VideoActivity extends AppCompatActivity {
             @Override
             public void onAdClosed() {
                 requestNewInterstitial();
-
                 // beginPlayingGame();
             }
-
             @Override
             public void onAdLoaded() {
                 super.onAdLoaded();
                 if (isAddLoaded){
                     mInterstetialAdds.show();
                 }
-
                 isAddLoaded=false;
             }
         });

@@ -24,6 +24,8 @@ android {
 }
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile(name:'VungleAdapter', 'ext':'aar')  // Vungle Adapter for AdMob
+
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -32,6 +34,10 @@ dependencies {
         // exclude Retrofit’s OkHttp peer-dependency module and define your own module import
         exclude module: 'okhttp'
     }
+    compile 'com.google.ads.mediation:chartboost:6.6.0.0'
+    compile 'com.google.ads.mediation:adcolony:3.0.6.0'
+    compile 'com.adcolony:sdk:3.1.1'
+    compile 'com.google.android.gms:play-services-ads:9.0.0'
 
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.android.support:design:25.1.0'
@@ -48,7 +54,15 @@ dependencies {
 
     compile 'com.google.firebase:firebase-core:9.2.1'
 }
-
-
-
+repositories {
+    /** The default repository for Android Studio projects */
+    jcenter()
+    flatDir {
+        dirs 'libs'
+    }
+    /** The repository required for AdColony 3.0 and above */
+    maven {
+        url  "https://adcolony.bintray.com/AdColony"
+    }
+}
 apply plugin: 'com.google.gms.google-services'

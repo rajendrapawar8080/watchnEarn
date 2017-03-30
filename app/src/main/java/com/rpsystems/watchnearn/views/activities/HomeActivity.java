@@ -16,6 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.adcolony.sdk.AdColony;
+import com.chartboost.sdk.Chartboost;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
@@ -50,24 +52,8 @@ public class HomeActivity extends AppCompatActivity implements NetworkReceiver{
        // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
       //  setSupportActionBar(toolbar);
         final String app_id = getString(R.string.vungle_app_id);
-
-        // initialize the Publisher SDK
-        vunglePub.init(this, app_id);
+         vunglePub.init(this, app_id);
          fab = (FloatingActionButton) findViewById(R.id.fab);
-
-
-      /*  mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-4371432322602969/3249622334");
-
-        mInterstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                requestNewInterstitial();
-                // beginPlayingGame();
-            }
-        });
-        requestNewInterstitial();*/
-
 
       //  initListener();
 
@@ -126,25 +112,7 @@ public class HomeActivity extends AppCompatActivity implements NetworkReceiver{
             }
         });
     }
-   /* private void initListener(){
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mInterstitialAd.isLoaded()) {
-                    mInterstitialAd.show();
-                }else {
-                    Toast.makeText(HomeActivity.this, "Ad did not load", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-    private void requestNewInterstitial() {
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .build();
 
-        mInterstitialAd.loadAd(adRequest);
-    }*/
     private void initTabValues(){
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 
@@ -223,11 +191,36 @@ public class HomeActivity extends AppCompatActivity implements NetworkReceiver{
     protected void onPause() {
         super.onPause();
         vunglePub.onPause();
+        Chartboost.onPause(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         vunglePub.onResume();
+        Chartboost.onResume(this);
+
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Chartboost.onStop(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Chartboost.onDestroy(this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // If an interstitial is on screen, close it.
+        if (Chartboost.onBackPressed())
+            return;
+        else
+            super.onBackPressed();
+    }
+
 }

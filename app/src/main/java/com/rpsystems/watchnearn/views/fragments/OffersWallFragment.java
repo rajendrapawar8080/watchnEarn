@@ -1,40 +1,42 @@
 package com.rpsystems.watchnearn.views.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
+import com.adcolony.sdk.AdColony;
+import com.adcolony.sdk.AdColonyInterstitial;
+import com.adcolony.sdk.AdColonyInterstitialListener;
+import com.google.ads.mediation.chartboost.ChartboostAdapter;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
+import com.jirbo.adcolony.AdColonyAdapter;
+import com.jirbo.adcolony.AdColonyBundleBuilder;
 import com.rpsystems.watchnearn.R;
+import com.rpsystems.watchnearn.constants.CommonConstant;
 import com.rpsystems.watchnearn.utilities.CustomObjects;
-import com.rpsystems.watchnearn.views.activities.VideoActivity;
-import com.rpsystems.watchnearn.views.activities.VungleAdds;
+import com.vungle.mediation.VungleAdapter;
+import com.vungle.mediation.VungleExtrasBuilder;
+import com.vungle.mediation.VungleInterstitialAdapter;
 import com.vungle.publisher.AdConfig;
 import com.vungle.publisher.EventListener;
 import com.vungle.publisher.Orientation;
 import com.vungle.publisher.VunglePub;
-
+import com.chartboost.sdk.Chartboost;
+import com.chartboost.sdk.CBLocation;
+import com.chartboost.sdk.ChartboostDelegate;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.content.ContentValues.TAG;
 
 //Our class extending fragment
 public class OffersWallFragment extends Fragment {
@@ -47,10 +49,11 @@ public class OffersWallFragment extends Fragment {
     @BindView(R.id.videoSix_ID) ImageView mVideoSix;
     private View mView;
     private Handler mHandler;
-    private AdConfig overrideConfig;
+    private InterstitialAd mInterstitialAd;
 
+    private AdColonyInterstitial addColonyAdds;
 
-
+    private  String app_id ;
     final VunglePub vunglePub = VunglePub.getInstance();
     //Overriden method onCreateView
     public OffersWallFragment(){
@@ -62,6 +65,21 @@ public class OffersWallFragment extends Fragment {
         //Returning the layout file after inflating
         //Change R.layout.fragment_payment in you classes
         mView=inflater.inflate(R.layout.fragment_offers,container,false);
+        app_id= getString(R.string.vungle_app_id);
+        vunglePub.init(getActivity(), app_id);
+        AdColony.configure(getActivity(),CommonConstant.ADCOLONY_APP_ID,CommonConstant.ADCOLONY_ZONE_ID);
+
+        Chartboost.startWithAppId(getActivity(), CommonConstant.CHARTBOOST_APP_ID, CommonConstant.CHARTBOOST_SIGNATURE_ID);
+        Chartboost.onCreate(getActivity());
+
+        mInterstitialAd = new InterstitialAd(getActivity());
+        mInterstitialAd.setAdUnitId("ca-app-pub-4371432322602969/3792849138");
+       /* mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                requestNewInterstitial();
+            }
+        });*/
         ButterKnife.bind(this,mView);
         initViews(mView);
         setHandler();
@@ -69,6 +87,7 @@ public class OffersWallFragment extends Fragment {
     }
    private void initViews(View view){
        mVideoFirst= (ImageView)view.findViewById(R.id.videoOne_ID);
+
    }
    public void setHandler(){
         mHandler = new Handler(Looper.getMainLooper()) {
@@ -86,101 +105,79 @@ public class OffersWallFragment extends Fragment {
        };
    }
    @OnClick(R.id.videoOne_ID) public void displayAdd(){
-       newActivity();
+       startAdds();
    }
     @OnClick(R.id.videoTwo_ID) public void displayAddTwo(){
-        newActivity();
+        startAdds();
     }
     @OnClick(R.id.videoThree_ID) public void displayAddThree(){
-        newActivity();
+        startAdds();
     }
     @OnClick(R.id.videoFour_ID) public void displayAddFour(){
-        newActivity();
+        startAdds();
     }
     @OnClick(R.id.videoFive_ID) public void displayAddFive(){
-        newActivity();
+        startAdds();
     }
     @OnClick(R.id.videoSix_ID) public void displayAddSix(){
-        newActivity();
+        startAdds();
     }
-    public void newActivity(){
-        final String app_id = getString(R.string.vungle_app_id);
+    public void startAdds(){
 
-        // initialize the Publisher SDK
-        vunglePub.init(getActivity(), app_id);
-        PlayAdIncentivized();
-       setCallBack();
-    }
-    private void PlayAdOptions() {
-        // create a new AdConfig object
-        final AdConfig overrideConfig = new AdConfig();
-
-        // set any configuration options you like.
-        overrideConfig.setOrientation(Orientation.matchVideo);
-        overrideConfig.setSoundEnabled(false);
-        overrideConfig.setBackButtonImmediatelyEnabled(false);
-        overrideConfig.setPlacement("StoreFront");
-        //overrideConfig.setExtra1("LaunchedFromNotification");
-
-        // the overrideConfig object will only affect this ad play.
-        vunglePub.playAd(overrideConfig);
-    }
-
-    private void PlayAdIncentivized() {
-        // create a new AdConfig object
-        final AdConfig overrideConfig = new AdConfig();
-
-        // set incentivized option on
-        overrideConfig.setIncentivized(true);
-        overrideConfig.setIncentivizedCancelDialogTitle("Careful!");
-        overrideConfig.setIncentivizedCancelDialogBodyText("If the video isn't completed you won't get your reward! Are you sure you want to close early?");
-        overrideConfig.setIncentivizedCancelDialogCloseButtonText("Close");
-        overrideConfig.setIncentivizedCancelDialogKeepWatchingButtonText("Keep Watching");
-
-        // the overrideConfig object will only affect this ad play.
-           if (vunglePub.isAdPlayable()){
-           vunglePub.playAd(overrideConfig);
+        if (mInterstitialAd.isLoaded()){
+            mInterstitialAd.show();
         }else{
-            Toast.makeText(getActivity(), "add is not availbale..try again ", Toast.LENGTH_SHORT).show();
+            requestNewInterstitial();
+            showAddColony();
+            showChatboost();
+            showVungle();
+            if (mInterstitialAd.isLoaded()){
+                mInterstitialAd.show();
+            }
         }
-
+        if (mInterstitialAd.isLoading()){
+            Toast.makeText(getActivity(), "Ad did not load....please wait", Toast.LENGTH_SHORT).show();
+        }
     }
-    public void setCallBack(){
+private void showAddColony(){
+    AdColonyBundleBuilder.setZoneId(CommonConstant.ADCOLONY_ZONE_ID);
+    AdRequest adRequest = new AdRequest.Builder()
+            .addNetworkExtrasBundle(AdColonyAdapter.class,AdColonyBundleBuilder.build())
+            .build();
+        mInterstitialAd.loadAd(adRequest);
+}
+private void showChatboost(){
+    Chartboost.showInterstitial(CBLocation.LOCATION_DEFAULT);
+    Chartboost.hasRewardedVideo(CBLocation.LOCATION_DEFAULT);
 
-    vunglePub.addEventListeners(new EventListener() {
-        @Override
-        public void onAdEnd(boolean wasSuccessfulView, boolean wasCallToActionClicked) {
-            CustomObjects customObjects=new CustomObjects();
-            customObjects.setVideoCompleted(wasSuccessfulView);
-            customObjects.setIsvideoActioClicked(wasCallToActionClicked);
-            //sending the custom object to main thread using message passing mechanism through handlers
-            Message message=new Message();
-            message.obj=customObjects;
-            mHandler.sendMessage(message);
-        }
+    Bundle bundle = new ChartboostAdapter.ChartboostExtrasBundleBuilder()
+            .build();
+    AdRequest adRequest = new AdRequest.Builder()
+            .addNetworkExtrasBundle(ChartboostAdapter.class,bundle)
+            .build();
 
-        @Override
-        public void onAdStart() {
-            Log.d(Tag,"onAdStart=");
-        }
+        mInterstitialAd.loadAd(adRequest);
 
-        @Override
-        public void onAdUnavailable(String s) {
-            Log.d(Tag,"onAdUnavailable="+s);
-        }
 
-        @Override
-        public void onAdPlayableChanged(boolean b) {
-            Log.d(Tag,"onAdPlayableChanged="+b);
-        }
-
-        @Override
-        public void onVideoView(boolean isCompletedView, int i, int i1) {
-            Log.d(Tag,"onVideoView="+isCompletedView);
-
-        }
-    });
 
 }
+private void showVungle(){
+    // build network extras bundle
+    Bundle extras = new VungleExtrasBuilder()
+            .setUserId("userId")
+            .setSoundEnabled(false)
+            .build();
+    AdRequest adRequest = new AdRequest.Builder()
+            .addNetworkExtrasBundle(VungleInterstitialAdapter.class, extras)
+            .build();
+        mInterstitialAd.loadAd(adRequest);
 
+}
+    private void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+            mInterstitialAd.loadAd(adRequest);
+
+    }
 }
