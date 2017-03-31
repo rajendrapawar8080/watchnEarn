@@ -1,11 +1,11 @@
 package com.rpsystems.watchnearn.views.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +15,8 @@ import android.widget.Toast;
 import com.adcolony.sdk.AdColony;
 import com.adcolony.sdk.AdColonyInterstitial;
 import com.adcolony.sdk.AdColonyInterstitialListener;
+import com.chartboost.sdk.CBLocation;
+import com.chartboost.sdk.Chartboost;
 import com.google.ads.mediation.chartboost.ChartboostAdapter;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -24,16 +26,10 @@ import com.jirbo.adcolony.AdColonyBundleBuilder;
 import com.rpsystems.watchnearn.R;
 import com.rpsystems.watchnearn.constants.CommonConstant;
 import com.rpsystems.watchnearn.utilities.CustomObjects;
-import com.vungle.mediation.VungleAdapter;
 import com.vungle.mediation.VungleExtrasBuilder;
 import com.vungle.mediation.VungleInterstitialAdapter;
-import com.vungle.publisher.AdConfig;
-import com.vungle.publisher.EventListener;
-import com.vungle.publisher.Orientation;
 import com.vungle.publisher.VunglePub;
-import com.chartboost.sdk.Chartboost;
-import com.chartboost.sdk.CBLocation;
-import com.chartboost.sdk.ChartboostDelegate;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -49,11 +45,15 @@ public class OffersWallFragment extends Fragment {
     @BindView(R.id.videoSix_ID) ImageView mVideoSix;
     private View mView;
     private Handler mHandler;
+    private ProgressDialog progressDialog;
     private InterstitialAd mInterstitialAd;
-
+    private InterstitialAd mGoogleInterestatialAds;
     private AdColonyInterstitial addColonyAdds;
-
-    private  String app_id ;
+    private boolean isAddLoaded=false;
+    private boolean isAddFailedToLoad=false;
+    private boolean isAddClosed=false;
+    private boolean isAddLeftApplication=false;
+    private String app_id ;
     final VunglePub vunglePub = VunglePub.getInstance();
     //Overriden method onCreateView
     public OffersWallFragment(){
@@ -61,33 +61,94 @@ public class OffersWallFragment extends Fragment {
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        //Returning the layout file after inflating
-        //Change R.layout.fragment_payment in you classes
         mView=inflater.inflate(R.layout.fragment_offers,container,false);
         app_id= getString(R.string.vungle_app_id);
         vunglePub.init(getActivity(), app_id);
-        AdColony.configure(getActivity(),CommonConstant.ADCOLONY_APP_ID,CommonConstant.ADCOLONY_ZONE_ID);
-
         Chartboost.startWithAppId(getActivity(), CommonConstant.CHARTBOOST_APP_ID, CommonConstant.CHARTBOOST_SIGNATURE_ID);
         Chartboost.onCreate(getActivity());
-
-        mInterstitialAd = new InterstitialAd(getActivity());
-        mInterstitialAd.setAdUnitId("ca-app-pub-4371432322602969/3792849138");
-       /* mInterstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                requestNewInterstitial();
-            }
-        });*/
         ButterKnife.bind(this,mView);
+
         initViews(mView);
-        setHandler();
+
         return mView;
     }
    private void initViews(View view){
        mVideoFirst= (ImageView)view.findViewById(R.id.videoOne_ID);
+       progressDialog=new ProgressDialog(getActivity());
+       progressDialog.setTitle("Ad is loding please wait...");
+       mInterstitialAd = new InterstitialAd(getActivity());
+       mInterstitialAd.setAdUnitId("ca-app-pub-4371432322602969/3792849138");
+       mGoogleInterestatialAds = new InterstitialAd(getActivity());
+       mGoogleInterestatialAds.setAdUnitId("ca-app-pub-4371432322602969/3249622334");
+       AdColony.configure(getActivity(),CommonConstant.ADCOLONY_APP_ID,CommonConstant.ADCOLONY_ZONE_ID);
+       requestNewInterstitial();
+       setHandler();
 
+   }
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                requestGoogleInterstitial();
+                if (mGoogleInterestatialAds.isLoaded()){
+                    mGoogleInterestatialAds.show();
+                }
+            }
+        },5000);
+    }
+
+    private void setInterestatialAddsListener(){
+      mInterstitialAd.setAdListener(new AdListener() {
+          @Override
+          public void onAdClosed() {
+              super.onAdClosed();
+              isAddClosed=true;
+              progressDialog.dismiss();
+          }
+
+          @Override
+          public void onAdFailedToLoad(int i) {
+              super.onAdFailedToLoad(i);
+              isAddFailedToLoad=true;
+              progressDialog.dismiss();
+          }
+
+          @Override
+          public void onAdLeftApplication() {
+              super.onAdLeftApplication();
+              isAddLeftApplication=true;
+              progressDialog.dismiss();
+          }
+
+          @Override
+          public void onAdOpened() {
+              super.onAdOpened();
+
+          }
+
+          @Override
+          public void onAdLoaded() {
+              super.onAdLoaded();
+              progressDialog.dismiss();
+              isAddLoaded=true;
+          }
+      });
+
+  }
+   private void checkAddColonyAdds(){
+       progressDialog.show();
+       final AdColonyInterstitialListener listener = new AdColonyInterstitialListener() {
+           @Override
+           public void onRequestFilled(AdColonyInterstitial ad) {
+               /** Store and use this ad object to show your ad when appropriate */
+               ad.show();
+               progressDialog.dismiss();
+           }
+       };
+       AdColony.requestInterstitial("vz43df28276a3b4077bb", listener);
    }
    public void setHandler(){
         mHandler = new Handler(Looper.getMainLooper()) {
@@ -99,16 +160,14 @@ public class OffersWallFragment extends Fragment {
                if (customObjects.isVideoCompleted()){
                    Toast.makeText(getActivity(), "You earned 1 coin", Toast.LENGTH_SHORT).show();
                }
-
-
            }
        };
    }
-   @OnClick(R.id.videoOne_ID) public void displayAdd(){
+    @OnClick(R.id.videoOne_ID) public void displayAdd(){
        startAdds();
    }
     @OnClick(R.id.videoTwo_ID) public void displayAddTwo(){
-        startAdds();
+        checkAddColonyAdds();
     }
     @OnClick(R.id.videoThree_ID) public void displayAddThree(){
         startAdds();
@@ -123,28 +182,63 @@ public class OffersWallFragment extends Fragment {
         startAdds();
     }
     public void startAdds(){
-
+        requestGoogleInterstitial();
+        requestNewInterstitial();
+        setInterestatialAddsListener();
         if (mInterstitialAd.isLoaded()){
             mInterstitialAd.show();
-        }else{
-            requestNewInterstitial();
-            showAddColony();
-            showChatboost();
-            showVungle();
-            if (mInterstitialAd.isLoaded()){
-                mInterstitialAd.show();
-            }
+            progressDialog.dismiss();
         }
         if (mInterstitialAd.isLoading()){
-            Toast.makeText(getActivity(), "Ad did not load....please wait", Toast.LENGTH_SHORT).show();
+            progressDialog.show();
         }
+       /* if (mInterstitialAd.isLoaded()){
+            mInterstitialAd.show();
+            progressDialog.dismiss();
+        }
+        if (mInterstitialAd.isLoading()){
+            progressDialog.show();
+        }*/
+        /*if (isAddLeftApplication||isAddFailedToLoad){
+            requestNewInterstitial();
+            if (isAddFailedToLoad||isAddLeftApplication){
+                checkAddColonyAdds();
+                if (isAddLeftApplication||isAddLeftApplication){
+                    showChatboost();
+                    if (isAddFailedToLoad||isAddLeftApplication){
+                        showVungle();
+                    }
+                }
+            }
+        }
+        if (isAddLoaded){
+            requestNewInterstitial();
+            if (isAddFailedToLoad||isAddLeftApplication){
+                checkAddColonyAdds();
+                if (isAddLeftApplication||isAddLeftApplication){
+                    showChatboost();
+                    if (isAddFailedToLoad||isAddLeftApplication){
+                        showVungle();
+                    }
+                }
+            }
+        }*/
     }
 private void showAddColony(){
     AdColonyBundleBuilder.setZoneId(CommonConstant.ADCOLONY_ZONE_ID);
     AdRequest adRequest = new AdRequest.Builder()
             .addNetworkExtrasBundle(AdColonyAdapter.class,AdColonyBundleBuilder.build())
             .build();
-        mInterstitialAd.loadAd(adRequest);
+    mInterstitialAd.loadAd(adRequest);
+    setInterestatialAddsListener();
+    if (mInterstitialAd.isLoaded()){
+        mInterstitialAd.show();
+        progressDialog.dismiss();
+    }
+    if (mInterstitialAd.isLoading()){
+        Toast.makeText(getActivity(), "Ad is loading....please wait", Toast.LENGTH_SHORT).show();
+        progressDialog.show();
+    }
 }
 private void showChatboost(){
     Chartboost.showInterstitial(CBLocation.LOCATION_DEFAULT);
@@ -157,6 +251,16 @@ private void showChatboost(){
             .build();
 
         mInterstitialAd.loadAd(adRequest);
+    setInterestatialAddsListener();
+    if (mInterstitialAd.isLoaded()){
+        mInterstitialAd.show();
+        progressDialog.dismiss();
+    }
+    if (mInterstitialAd.isLoading()){
+        Toast.makeText(getActivity(), "Ad is loading....please wait", Toast.LENGTH_SHORT).show();
+        progressDialog.show();
+    }
+
 
 
 
@@ -171,13 +275,28 @@ private void showVungle(){
             .addNetworkExtrasBundle(VungleInterstitialAdapter.class, extras)
             .build();
         mInterstitialAd.loadAd(adRequest);
-
-}
+    setInterestatialAddsListener();
+    if (mInterstitialAd.isLoaded()){
+        mInterstitialAd.show();
+        progressDialog.dismiss();
+    }
+    if (mInterstitialAd.isLoading()){
+        Toast.makeText(getActivity(), "Ad is loading....please wait", Toast.LENGTH_SHORT).show();
+        progressDialog.show();
+    }
+    }
     private void requestNewInterstitial() {
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .build();
             mInterstitialAd.loadAd(adRequest);
+
+    }
+    private void requestGoogleInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+        mGoogleInterestatialAds.loadAd(adRequest);
 
     }
 }
