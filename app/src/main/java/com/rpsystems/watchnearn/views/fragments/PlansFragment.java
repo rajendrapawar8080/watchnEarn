@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.rpsystems.watchnearn.R;
 
-public class Tab3 extends Fragment {
+public class PlansFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

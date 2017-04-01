@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.rpsystems.watchnearn.R;
 
 //Our class extending fragment
-public class Tab5 extends Fragment {
+public class SupportFragment extends Fragment {
 
     //Overriden method onCreateView
     @Override

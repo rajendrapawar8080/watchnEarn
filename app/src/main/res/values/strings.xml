@@ -4,5 +4,21 @@
     <string name="payment_converion">Convert Coins to Dollar</string>
     <string name="payment_request">Requet payment </string>
     <string name="payment_status">Payment Status</string>
+    <!--login placeholders-->
+    <string name="edit_email">Email</string>
+    <string name="edit_password">Password</string>
+    <string name="txt_forgotpass">forgot pass?</string>
+    <string name="btn_loginttxt">Login</string>
+    <string name="txt_donthaveacount">Dont have Accout?</string>
+    <string name="txt_signup">SignUp</string>
+    <!--sign up placeholders-->
+    <string name="edit_name">Your name</string>
+    <string name="edit_confirmPass">Confirm password</string>
+    <string name="edit_mobile">Mobile number</string>
+    <string name="edit_dob">Date of Birth</string>
+    <string name="edit_coutry">Country</string>
+    <string name="edit_referal">Reference Code</string>
+    <string name="create_account">Create one for me</string>
 
+    <string name="vungle_app_id">58db7386eba9a90a1a000dea</string>
 </resources>
