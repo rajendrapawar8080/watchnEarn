@@ -4,12 +4,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.rpsystems.watchnearn.views.fragments.InviteFragment;
 import com.rpsystems.watchnearn.views.fragments.OffersWallFragment;
 import com.rpsystems.watchnearn.views.fragments.PaymentFragment;
-import com.rpsystems.watchnearn.views.fragments.Tab3;
-import com.rpsystems.watchnearn.views.fragments.Tab4;
-import com.rpsystems.watchnearn.views.fragments.Tab5;
-import com.rpsystems.watchnearn.views.fragments.Tab6;
+import com.rpsystems.watchnearn.views.fragments.PlansFragment;
+import com.rpsystems.watchnearn.views.fragments.ProfileFragment;
+import com.rpsystems.watchnearn.views.fragments.SupportFragment;
 import com.rpsystems.watchnearn.views.fragments.Tab7;
 
 public class Pager extends FragmentStatePagerAdapter {
@@ -36,16 +36,16 @@ public class Pager extends FragmentStatePagerAdapter {
                 PaymentFragment tab2 = new PaymentFragment();
                 return tab2;
             case 2:
-                Tab3 tab3 = new Tab3();
+                PlansFragment tab3 = new PlansFragment();
                 return tab3;
             case 3:
-                Tab4 tab4 = new Tab4();
+                InviteFragment tab4 = new InviteFragment();
                 return tab4;
             case 4:
-                Tab5 tab5 = new Tab5();
+                SupportFragment tab5 = new SupportFragment();
                 return tab5;
             case 5:
-                Tab6 tab6 = new Tab6();
+                ProfileFragment tab6 = new ProfileFragment();
                 return tab6;
             case 6:
                 Tab7 tab7 = new Tab7();

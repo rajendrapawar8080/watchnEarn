@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.rpsystems.watchnearn.R;
 
 //Our class extending fragment
-public class Tab6 extends Fragment {
+public class InviteFragment extends Fragment {
 
     //Overriden method onCreateView
     @Override
@@ -17,6 +17,6 @@ public class Tab6 extends Fragment {
 
         //Returning the layout file after inflating
         //Change R.layout.fragment_payment in you classes
-        return inflater.inflate(R.layout.tab6, container, false);
+        return inflater.inflate(R.layout.tab4, container, false);
     }
 }
