@@ -28,6 +28,7 @@
         app:tabMode="scrollable"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
+        app:tabTextColor="@android:color/white"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <FrameLayout

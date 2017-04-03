@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
 import com.rpsystems.watchnearn.R;
+import com.rpsystems.watchnearn.views.fragments.DailyBonusFragment;
 import com.rpsystems.watchnearn.views.fragments.FunnyVideosFragment;
 import com.rpsystems.watchnearn.views.fragments.InviteFragment;
 import com.rpsystems.watchnearn.views.fragments.OffersWallFragment;
@@ -15,7 +16,6 @@ import com.rpsystems.watchnearn.views.fragments.PaymentFragment;
 import com.rpsystems.watchnearn.views.fragments.PlansFragment;
 import com.rpsystems.watchnearn.views.fragments.ProfileFragment;
 import com.rpsystems.watchnearn.views.fragments.SupportFragment;
-import com.rpsystems.watchnearn.views.fragments.Tab7;
 
 public class Pager extends FragmentStatePagerAdapter {
 
@@ -48,26 +48,30 @@ public class Pager extends FragmentStatePagerAdapter {
              //   chageFragment(tab2);
                 return tab2;
             case 2:
-                PaymentFragment tab3 = new PaymentFragment();
+                DailyBonusFragment tab3 = new DailyBonusFragment();
+               return tab3;
+
+            case 3:
+                PaymentFragment tab4 = new PaymentFragment();
                 Log.d("Pager","BackStack for fragments="+fragmentManager.getBackStackEntryCount());
              //   chageFragment(tab3);
-                return tab3;
-            case 3:
-                PlansFragment tab4 = new PlansFragment();
-             //   chageFragment(tab4);
                 return tab4;
             case 4:
-                InviteFragment tab5 = new InviteFragment();
-             //   chageFragment(tab5);
+                PlansFragment tab5 = new PlansFragment();
+             //   chageFragment(tab4);
                 return tab5;
             case 5:
-                SupportFragment tab6 = new SupportFragment();
-               // chageFragment(tab6);
+                InviteFragment tab6 = new InviteFragment();
+             //   chageFragment(tab5);
                 return tab6;
             case 6:
-                ProfileFragment tab7 = new ProfileFragment();
-              //  chageFragment(tab7);
+                SupportFragment tab7 = new SupportFragment();
+               // chageFragment(tab6);
                 return tab7;
+            case 7:
+                ProfileFragment tab8 = new ProfileFragment();
+              //  chageFragment(fragment_dailybonus);
+                return tab8;
 
             default:
                 return null;

@@ -47,7 +47,7 @@ public class VideoActivity extends AppCompatActivity {
     private void initMediaController() {
         MediaController mediaController = new MediaController(VideoActivity.this);
         mediaController.setAnchorView(mVideoView);
-        Uri uri = Uri.parse(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath()+"/Sample Videos.mp4");
+        Uri uri = Uri.parse(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath()+"/Sample VideosCopy.mp4");
         mVideoView.setMediaController(mediaController);
         mVideoView.setVideoURI(uri);
         mVideoView.requestFocus();

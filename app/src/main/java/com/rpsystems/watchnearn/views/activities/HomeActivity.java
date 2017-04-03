@@ -20,6 +20,7 @@ import com.rpsystems.watchnearn.controllers.adapters.Pager;
 import com.rpsystems.watchnearn.controllers.interfaces.NetworkReceiver;
 import com.rpsystems.watchnearn.rest.NetworkCall;
 import com.rpsystems.watchnearn.rest.model.requestpojos.PaymentRequest;
+import com.rpsystems.watchnearn.views.fragments.DailyBonusFragment;
 import com.rpsystems.watchnearn.views.fragments.FunnyVideosFragment;
 import com.rpsystems.watchnearn.views.fragments.InviteFragment;
 import com.rpsystems.watchnearn.views.fragments.OffersWallFragment;
@@ -28,7 +29,6 @@ import com.rpsystems.watchnearn.views.fragments.PaymentFragment;
 import com.rpsystems.watchnearn.views.fragments.PlansFragment;
 import com.rpsystems.watchnearn.views.fragments.ProfileFragment;
 import com.rpsystems.watchnearn.views.fragments.SupportFragment;
-import com.rpsystems.watchnearn.views.fragments.Tab7;
 import com.vungle.publisher.VunglePub;
 
 public class HomeActivity extends AppCompatActivity implements NetworkReceiver{
@@ -72,24 +72,31 @@ public class HomeActivity extends AppCompatActivity implements NetworkReceiver{
 
                         break;
                     case 2:
-                            Fragment tab3 = new PaymentFragment();
-                            chageFragment(tab3,"payment");
+                        DailyBonusFragment tab3 = new DailyBonusFragment();
+                        chageFragment(tab3,"bonus");
+                        break;
                     case 3:
-                            Fragment tab4 = new PlansFragment();
-                            chageFragment(tab4,"plans");
+                            Fragment tab4 = new PaymentFragment();
+                            chageFragment(tab4,"payment");
+                        break;
                     case 4:
-                            Fragment tab5 = new InviteFragment();
-                            chageFragment(tab5,"invite");
-
+                            Fragment tab5 = new PlansFragment();
+                            chageFragment(tab5,"plans");
                     case 5:
-                            Fragment tab6 = new SupportFragment();
-                            chageFragment(tab6,"support");
+                            Fragment tab6 = new InviteFragment();
+                            chageFragment(tab6,"invite");
+                        break;
 
                     case 6:
-                            Fragment tab7 = new ProfileFragment();
-                            chageFragment(tab7,"profile");
-                       /* ProfileFragment tab7= new ProfileFragment();
-                        chageFragment(tab7,"profile");*/
+                            Fragment tab7 = new SupportFragment();
+                            chageFragment(tab7,"support");
+                        break;
+
+                    case 7:
+                            Fragment tab8 = new ProfileFragment();
+                            chageFragment(tab8,"profile");
+                       /* ProfileFragment fragment_dailybonus= new ProfileFragment();
+                        chageFragment(fragment_dailybonus,"profile");*/
                         break;
                 }
 
@@ -113,6 +120,7 @@ public class HomeActivity extends AppCompatActivity implements NetworkReceiver{
         //Adding the tabs using addTab() method
         tabLayout.addTab(tabLayout.newTab().setText("Add Offers"));
         tabLayout.addTab(tabLayout.newTab().setText("Funny Videos"));
+        tabLayout.addTab(tabLayout.newTab().setText("Daily Bonus"));
         tabLayout.addTab(tabLayout.newTab().setText("Payment Fragment"));
         tabLayout.addTab(tabLayout.newTab().setText("Plans"));
         tabLayout.addTab(tabLayout.newTab().setText("Invite"));

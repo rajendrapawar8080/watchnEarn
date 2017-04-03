@@ -26,6 +26,7 @@ import com.jirbo.adcolony.AdColonyBundleBuilder;
 import com.rpsystems.watchnearn.R;
 import com.rpsystems.watchnearn.constants.CommonConstant;
 import com.rpsystems.watchnearn.utilities.CustomObjects;
+import com.vungle.publisher.AdConfig;
 import com.vungle.publisher.EventListener;
 import com.vungle.publisher.VunglePub;
 
@@ -249,10 +250,24 @@ private void showChatboost(){
      *
      */
 private void showVungle() {
+    final AdConfig overrideConfig = new AdConfig();
+
+    // set any configuration options you like.
+    // For a full description of available options, see the
+    // 'Configuration Options' section.
+
+    overrideConfig.setIncentivized(true);
+    overrideConfig.setSoundEnabled(false);
+
     vunglePub.addEventListeners(new EventListener() {
         @Override
         public void onAdEnd(boolean b, boolean b1) {
             progressDialog.dismiss();
+            CustomObjects customObjects=new CustomObjects();
+            customObjects.setVideoCompleted(true);
+            Message message=new Message();
+            message.obj=customObjects;
+            mHandler.sendMessage(message);
         }
 
         @Override
@@ -278,7 +293,7 @@ private void showVungle() {
 
     if (vunglePub.isAdPlayable()) {
         progressDialog.dismiss();
-        vunglePub.playAd();
+        vunglePub.playAd(overrideConfig);
     } else{
         progressDialog.show();
     }
