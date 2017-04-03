@@ -1,9 +1,14 @@
 package com.rpsystems.watchnearn.controllers.adapters;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 
+import com.rpsystems.watchnearn.R;
+import com.rpsystems.watchnearn.views.fragments.FunnyVideosFragment;
 import com.rpsystems.watchnearn.views.fragments.InviteFragment;
 import com.rpsystems.watchnearn.views.fragments.OffersWallFragment;
 import com.rpsystems.watchnearn.views.fragments.PaymentFragment;
@@ -16,10 +21,13 @@ public class Pager extends FragmentStatePagerAdapter {
 
     //integer to count number of tabs
     int tabCount;
+    Context context;
+    FragmentManager fragmentManager;
 
     //Constructor to the class
     public Pager(FragmentManager fm, int tabCount) {
         super(fm);
+        fragmentManager=fm;
         //Initializing tab count
         this.tabCount= tabCount;
 
@@ -31,24 +39,34 @@ public class Pager extends FragmentStatePagerAdapter {
         switch (position) {
             case 0:
                 OffersWallFragment tab1 = new OffersWallFragment();
+                Log.d("Pager","BackStack for fragments="+fragmentManager.getBackStackEntryCount());
+            //    chageFragment(tab1);
                 return tab1;
             case 1:
-                PaymentFragment tab2 = new PaymentFragment();
+                FunnyVideosFragment tab2 = new FunnyVideosFragment();
+                Log.d("Pager","BackStack for fragments="+fragmentManager.getBackStackEntryCount());
+             //   chageFragment(tab2);
                 return tab2;
             case 2:
-                PlansFragment tab3 = new PlansFragment();
+                PaymentFragment tab3 = new PaymentFragment();
+                Log.d("Pager","BackStack for fragments="+fragmentManager.getBackStackEntryCount());
+             //   chageFragment(tab3);
                 return tab3;
             case 3:
-                InviteFragment tab4 = new InviteFragment();
+                PlansFragment tab4 = new PlansFragment();
+             //   chageFragment(tab4);
                 return tab4;
             case 4:
-                SupportFragment tab5 = new SupportFragment();
+                InviteFragment tab5 = new InviteFragment();
+             //   chageFragment(tab5);
                 return tab5;
             case 5:
-                ProfileFragment tab6 = new ProfileFragment();
+                SupportFragment tab6 = new SupportFragment();
+               // chageFragment(tab6);
                 return tab6;
             case 6:
-                Tab7 tab7 = new Tab7();
+                ProfileFragment tab7 = new ProfileFragment();
+              //  chageFragment(tab7);
                 return tab7;
 
             default:
@@ -61,4 +79,10 @@ public class Pager extends FragmentStatePagerAdapter {
     public int getCount() {
         return tabCount;
     }
+    private void chageFragment(Fragment fragment) {
+        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.content,fragment).disallowAddToBackStack().commit();
+    }
+
+
 }

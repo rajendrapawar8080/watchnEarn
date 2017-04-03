@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -19,18 +20,21 @@ import com.rpsystems.watchnearn.controllers.adapters.Pager;
 import com.rpsystems.watchnearn.controllers.interfaces.NetworkReceiver;
 import com.rpsystems.watchnearn.rest.NetworkCall;
 import com.rpsystems.watchnearn.rest.model.requestpojos.PaymentRequest;
+import com.rpsystems.watchnearn.views.fragments.FunnyVideosFragment;
+import com.rpsystems.watchnearn.views.fragments.InviteFragment;
 import com.rpsystems.watchnearn.views.fragments.OffersWallFragment;
 import com.rpsystems.watchnearn.views.fragments.PaymentFragment;
-import com.rpsystems.watchnearn.views.fragments.Tab3;
-import com.rpsystems.watchnearn.views.fragments.Tab4;
-import com.rpsystems.watchnearn.views.fragments.Tab5;
-import com.rpsystems.watchnearn.views.fragments.Tab6;
+
+import com.rpsystems.watchnearn.views.fragments.PlansFragment;
+import com.rpsystems.watchnearn.views.fragments.ProfileFragment;
+import com.rpsystems.watchnearn.views.fragments.SupportFragment;
 import com.rpsystems.watchnearn.views.fragments.Tab7;
 import com.vungle.publisher.VunglePub;
 
 public class HomeActivity extends AppCompatActivity implements NetworkReceiver{
 
     //This is our tablayout
+    public static String TAG="HomeActivity";
     private TabLayout tabLayout;
  //   private InterstitialAd mInterstitialAd;
     //This is our viewPager
@@ -59,35 +63,35 @@ public class HomeActivity extends AppCompatActivity implements NetworkReceiver{
 
                 switch (tab.getPosition()) {
                     case 0:
-                        Fragment tab1 = new OffersWallFragment();
-                       chageFragment(tab1,"offers");
+                            Fragment tab1 = new OffersWallFragment();
+                            chageFragment(tab1,"offers");
                         break;
                     case 1:
-                        Fragment tab2 = new PaymentFragment();
-                        chageFragment(tab2,"payment");
+                            Fragment tab2 = new FunnyVideosFragment();
+                            chageFragment(tab2,"funnyVideos");
+
                         break;
                     case 2:
-                        Fragment tab3 = new Tab3();
-                        chageFragment(tab3,"tab3");
-                        break;
+                            Fragment tab3 = new PaymentFragment();
+                            chageFragment(tab3,"payment");
                     case 3:
-                        Tab4 tab4 = new Tab4();
-                        chageFragment(tab4,"tab4");
-                        break;
+                            Fragment tab4 = new PlansFragment();
+                            chageFragment(tab4,"plans");
                     case 4:
-                        Tab5 tab5 = new Tab5();
-                        chageFragment(tab5,"tab5");
-                        break;
+                            Fragment tab5 = new InviteFragment();
+                            chageFragment(tab5,"invite");
+
                     case 5:
-                        Tab6 tab6 = new Tab6();
-                        chageFragment(tab6,"tab6");
-                        break;
+                            Fragment tab6 = new SupportFragment();
+                            chageFragment(tab6,"support");
+
                     case 6:
-                        Tab7 tab7 = new Tab7();
-                        chageFragment(tab7,"tab7");
+                            Fragment tab7 = new ProfileFragment();
+                            chageFragment(tab7,"profile");
+                       /* ProfileFragment tab7= new ProfileFragment();
+                        chageFragment(tab7,"profile");*/
                         break;
                 }
-
 
             }
 
@@ -107,13 +111,13 @@ public class HomeActivity extends AppCompatActivity implements NetworkReceiver{
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 
         //Adding the tabs using addTab() method
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.facbook));
-        tabLayout.addTab(tabLayout.newTab().setText("PaymentFragment"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab3"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab4"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab5"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab6"));
-        tabLayout.addTab(tabLayout.newTab().setText("Tab7"));
+        tabLayout.addTab(tabLayout.newTab().setText("Add Offers"));
+        tabLayout.addTab(tabLayout.newTab().setText("Funny Videos"));
+        tabLayout.addTab(tabLayout.newTab().setText("Payment Fragment"));
+        tabLayout.addTab(tabLayout.newTab().setText("Plans"));
+        tabLayout.addTab(tabLayout.newTab().setText("Invite"));
+        tabLayout.addTab(tabLayout.newTab().setText("Support"));
+        tabLayout.addTab(tabLayout.newTab().setText("Profile"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         //Initializing viewPager
@@ -127,19 +131,23 @@ public class HomeActivity extends AppCompatActivity implements NetworkReceiver{
         //Adding adapter to pager
         viewPager.setAdapter(adapter);
     }
-    private void chageFragment(Fragment fragment, String tag) {
+    private void chageFragment(Fragment fragment,String tag) {
+        Log.d(TAG,"BackStack for fragments="+getSupportFragmentManager().getBackStackEntryCount());
         FragmentManager fragmentManager=getSupportFragmentManager();
         FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.content,fragment,tag).commit();
+        fragmentTransaction.replace(R.id.content,fragment).disallowAddToBackStack().commit();
     }
-
+private void showFragment(Fragment fragment){
+    FragmentManager fragmentManager=getSupportFragmentManager();
+    FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+    fragmentTransaction.replace(R.id.content,fragment).show(fragment).commit();
+}
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_home, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

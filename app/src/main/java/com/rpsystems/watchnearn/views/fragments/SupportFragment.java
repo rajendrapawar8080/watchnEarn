@@ -17,6 +17,6 @@ public class SupportFragment extends Fragment {
 
         //Returning the layout file after inflating
         //Change R.layout.fragment_payment in you classes
-        return inflater.inflate(R.layout.tab5, container, false);
+        return inflater.inflate(R.layout.fragment_support, container, false);
     }
 }

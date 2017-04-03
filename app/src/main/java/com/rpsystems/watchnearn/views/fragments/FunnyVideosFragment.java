@@ -8,8 +8,11 @@ import android.view.ViewGroup;
 
 import com.rpsystems.watchnearn.R;
 
-//Our class extending fragment
-public class InviteFragment extends Fragment {
+/**
+ * Created by neosoft on 3/4/17.
+ */
+
+public class FunnyVideosFragment extends Fragment {
 
     //Overriden method onCreateView
     @Override
@@ -17,6 +20,6 @@ public class InviteFragment extends Fragment {
 
         //Returning the layout file after inflating
         //Change R.layout.fragment_payment in you classes
-        return inflater.inflate(R.layout.fragment_invite, container, false);
+        return inflater.inflate(R.layout.fragment_funnyvideos, container, false);
     }
 }

@@ -17,6 +17,6 @@ public class ProfileFragment extends Fragment {
 
         //Returning the layout file after inflating
         //Change R.layout.fragment_payment in you classes
-        return inflater.inflate(R.layout.tab6, container, false);
+        return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 }
